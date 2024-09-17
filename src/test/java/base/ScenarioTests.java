@@ -3,14 +3,20 @@ package base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterClass;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import pages.ExplorePage;
 import pages.HomePage;
+import pages.LoginPage;
 
-public class BaseTests {
+import java.time.Duration;
+
+public class ScenarioTests {
     private WebDriver driver;
     protected HomePage homePage;
+    private int waitingTime = 15;
     @BeforeClass
     public void setup(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
@@ -18,6 +24,11 @@ public class BaseTests {
         goHome();
         driver.manage().window().maximize();
         homePage = new HomePage(driver);
+        LoginPage loginPage = homePage.clickLogin();
+        driver.manage().timeouts().getPageLoadTimeout();
+        loginPage.setEmail("fegeba7870@heweek.com");
+        loginPage.setPassword("testAutomation123");
+        ExplorePage explorePage = loginPage.clickSignInButton();
     }
     @BeforeMethod
     public void goHome(){

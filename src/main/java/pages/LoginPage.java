@@ -13,13 +13,14 @@ public class LoginPage {
     private By emailInput = By.cssSelector("input[name='email']");
     private By passwordInput = By.cssSelector("input[name='password']");
     private By signInButton  = By.xpath("//button[text()='Sign in']");
+    private int waitingTime = 15;
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
     }
 
     public void setEmail(String email){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(waitingTime));
         wait.until(ExpectedConditions.presenceOfElementLocated(emailInput));
         driver.findElement(emailInput).sendKeys(email);
     }
